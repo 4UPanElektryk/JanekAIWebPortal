@@ -1,0 +1,412 @@
+@use "sass:map";
+@import "gaymonth";
+// #region  Colors
+$primary: #0078d7;
+$secondary: #84d;
+$error: #c0392b;
+$success: #27ae60;
+$information: #0078d7;
+$warning: #f39c12;
+$dark: #777;
+
+$schemes: (
+	"light": ("text": #222,
+		"background": #f6f8fa,
+		"shadow": rgba(44, 62, 80, 0.08),
+		"link": #0078d7,
+	),
+	"dark": ("text": #f0f0f0,
+		"background": #222,
+		"shadow": rgba(0, 0, 0, 0.2),
+		"link": #84d,
+	)
+);
+
+@function change($scheme, $color, $amount, $mode: "darken") {
+	$mixcolor: map.get($schemes, $scheme, "background");
+
+	@if $mode =="darken" {
+		$color: saturate($color, 10%);
+	}
+
+	@else if $mode =="lighten" {
+		$color: desaturate($color, 10%);
+	}
+
+	@else if $mode =="mix" {
+		// No change to color, just mix
+		$color: $color;
+	}
+
+	@else {
+		@error "Invalid mode: #{$mode}. Use 'darken' or 'lighten'.";
+	}
+
+	@return mix($mixcolor, $color, $amount * 1%);
+}
+
+// Color map for easy access
+$infoset: (
+	"error": $error,
+	"success": $success,
+	"warning": $warning,
+	"information": $information,
+	"default": $primary,
+	"special": $secondary,
+	"dark": $dark,
+);
+// #endregion 
+
+@each $scheme, $colors in $schemes {
+	$background: map.get($colors, "background");
+	$text: map.get($colors, "text");
+	$border: change($scheme, $text, 80, "lighten");
+	$shadow: map.get($colors, "shadow");
+	$link: map.get($colors, "link");
+
+	body.#{$scheme} {
+
+		& {
+			background-color: $background;
+			color: $text;
+			font-family: 'Segoe UI', Arial, sans-serif;
+			margin: 0;
+			padding: 0;
+			transition: background-color 0.5s;
+		}
+
+		a {
+			color: $link;
+			transition: color 0.2s;
+
+			&:hover {
+				color: change($scheme, $link, 20, "darken");
+			}
+		}
+
+		// #region Change Theme button
+		@each $otherscheme, $othercolors in $schemes {
+			@if $otherscheme !=$scheme {
+				#button-mode {
+					display: inline-block;
+					background-color: map.get($othercolors, "background");
+					color: map.get($othercolors, "text");
+					border: none;
+					border-radius: 6px;
+					padding: 0.7em 1.5em;
+					font-size: 1em;
+					cursor: pointer;
+					transition: background 0.2s;
+
+					&:hover {
+						background-color: change($scheme, map.get($othercolors, "background"), 10)
+					}
+				}
+			}
+		}
+
+		// #endregion
+
+		h1,
+		h2,
+		h3 {
+			color: $text;
+			margin-top: 1.5em;
+		}
+
+		h1 {
+			text-align: center;
+			margin-top: 2em;
+		}
+
+		// #region Buttons and Textblocks
+		@each $type, $color in $infoset {
+
+			.textblock-#{$type} {
+				& {
+					background-color: change($scheme, $color, 50, "lighten");
+					color: $text;
+					border-left: 5px solid $color;
+					padding: 1em 1.5em;
+					border-radius: 8px;
+					max-width: 800px;
+					margin: 1.5em auto;
+					font-size: 1.1em;
+					box-shadow: 0 2px 12px $shadow;
+					transition: background-color 0.5s;
+				}
+
+				// Link styles
+				a:not(.button-*) {
+					& {
+						color: $color;
+					}
+
+					&:hover {
+						color: change($scheme, $color, 20, "darken");
+					}
+				}
+
+				.textblock-title {
+					font-weight: bold;
+					color: change($scheme, $color, 0, "lighten");
+					display: flex;
+					align-content: center;
+					font-size: 1.5em;
+
+					ion-icon {
+						margin-right: 0.2em;
+					}
+				}
+			}
+
+			a.button-#{$type},
+			.button-#{$type} {
+				& {
+					display: inline-block;
+					background-color: change($scheme, $color, 10, "lighten");
+					text-decoration: none;
+					color: white;
+					border: none;
+					border-radius: 6px;
+					padding: 0.7em 1.5em;
+					font-size: 1em;
+					cursor: pointer;
+					transition: background 0.2s;
+				}
+
+				&:hover {
+					color: white;
+					background-color: change($scheme, $color, 10, "darken");
+				}
+			}
+		}
+
+		// #endregion
+
+		.container {
+			& {
+				background: $background;
+				max-width: 800px;
+				margin: 2em auto;
+				padding: 2em 2.5em;
+				border-radius: 12px;
+				box-shadow: 0 2px 16px $shadow;
+				transition: background-color 0.5s;
+			}
+
+			h1,
+			h2,
+			h3 {
+				&:first-child {
+					margin-top: 0;
+				}
+			}
+		}
+
+		// #region inputs
+		input[type="radio"] {
+			& {
+				display: inline-block;
+				appearance: none;
+				background-color: $background;
+				color: $text;
+				border: 2px solid $border;
+				border-radius: 50%;
+				width: 1.6em;
+				height: 1.6em;
+				margin-right: 0.4em;
+				transition: background-color 0.2s;
+			}
+
+			&:checked {
+				background-color: $link;
+				border-color: $link;
+			}
+		}
+
+		textarea,
+		input[type="text"],
+		input[type="password"],
+		input[type="email"] {
+			& {
+				background-color: $background;
+				color: $text;
+				width: 100%;
+				border-radius: 6px;
+				border: 2px solid $border;
+				padding: 0.7em;
+				font-size: 1em;
+				margin-top: 0.5em;
+				box-sizing: border-box;
+				transition: border-color 0.2s;
+			}
+
+			&:focus {
+				border-color: $link;
+				outline: none;
+				box-shadow: 0 0 5px change($scheme, $link, 50, "lighten");
+			}
+
+			&:invalid {
+				border-color: $error;
+				box-shadow: 0 0 5px change($scheme, $error, 50, "lighten");
+			}
+		}
+
+		textarea {
+			resize: vertical;
+		}
+
+		input[type="checkbox"] {
+			& {
+				display: inline-block;
+				appearance: none;
+				background-color: $background;
+				color: $text;
+				border: 2px solid $border;
+				border-radius: 4px;
+				width: 1.6em;
+				height: 1.6em;
+				margin-right: 0.4em;
+				transition: background-color 0.2s;
+			}
+
+			&:checked {
+				background-color: $link;
+				border-color: $link;
+			}
+
+			&:disabled {
+				background-color: change($scheme, $border, 20, "lighten");
+				cursor: not-allowed;
+				border-color: change($scheme, $text, 20, "darken");
+
+				&::before {
+					background-color: change($scheme, $text, 20, "darken");
+				}
+			}
+
+			&.switch {
+				display: inline-block;
+				position: relative;
+				width: 3em;
+				height: 1.6em;
+				background-color: $border;
+				border-radius: 1.5em;
+				cursor: pointer;
+				transition: background-color 0.2s;
+
+				&::before {
+					content: "";
+					position: absolute;
+					/*top: 0.1em;
+					left: 0.1em;*/
+					width: 1.3em;
+					height: 1.3em;
+					background-color: $background;
+					border-radius: 50%;
+					transition: transform 0.2s;
+				}
+
+				&:checked {
+					background-color: $link;
+
+					&::before {
+						transform: translateX(1.4em);
+					}
+				}
+
+				&:disabled {
+					background-color: change($scheme, $border, 20, "lighten");
+					cursor: not-allowed;
+
+					&::before {
+						background-color: change($scheme, $text, 20, "darken");
+					}
+				}
+			}
+		}
+
+		input:disabled {
+			background-color: change("light", $background, 20, "lighten");
+			color: change("light", $text, 20, "darken");
+			border-color: change("light", $border, 20, "darken");
+			cursor: not-allowed;
+		}
+
+		// #endregion
+	}
+}
+
+ion-icon {
+	font-size: 1.5em;
+}
+
+label {
+	display: flex;
+	align-items: center;
+	margin-right: 1.5em;
+	font-size: 1.6em;
+	cursor: pointer;
+	margin-bottom: 0.5em;
+}
+
+.floating-island {
+	display: inline-block;
+	position: absolute;
+	box-sizing: border-box;
+	top: 2em;
+	right: 2em;
+}
+
+// Responsive styles
+@media (max-width: 600px) {
+	body {
+		padding: 0 0.5em;
+	}
+
+	@each $type, $color in $infoset {
+		.textblock-#{$type} {
+			max-width: 100%;
+			padding: 1em 0.5em;
+			margin: 1em 0.2em;
+			box-sizing: border-box;
+		}
+
+		.floating-island {
+			.button-#{$type} {
+				width: auto;
+				margin: 0.5em 0;
+				padding: 0.7em 1em;
+				font-size: 1em;
+			}
+		}
+
+		.button-#{$type} {
+			width: 100%;
+			margin: 0.5em 0;
+			padding: 0.7em 0;
+			font-size: 1em;
+		}
+	}
+
+	.floating-island {
+		position: static;
+		display: block;
+		width: 100%;
+		margin: 1em 0 0 0;
+		text-align: center;
+		box-shadow: none;
+	}
+
+	h1 {
+		font-size: 1.3em;
+		margin-top: 1em;
+	}
+
+	h2,
+	h3 {
+		font-size: 1.08em;
+	}
+}

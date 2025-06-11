@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<link rel="stylesheet" href="flow.css">
+	<script src="./../scripts/mode.js"></script>
+</head>
+<body class="light">
+	<h1>Style Test</h1>
+	<div class="floating-island">
+		<button id="button-mode">Change Mode</button>
+	</div>
+	<div>
+		<h1>Textblocks</h1>
+		<div class="textblock-error">
+			<div class="textblock-title">
+				<ion-icon name="warning"></ion-icon> Error
+			</div>
+			<p>This is a <b>error</b> text block.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div>
+		<div class="textblock-warning">
+			<div class="textblock-title">
+				<ion-icon name="warning"></ion-icon> Warning
+			</div>
+			<p>This is a <b>warning</b> text block.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div>
+		<div class="textblock-information">
+			<div class="textblock-title">
+				<ion-icon name="information-circle"></ion-icon> Information
+			</div>
+			<p>This is an <b>information</b> text block.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div>
+		<div class="textblock-success">
+			<div class="textblock-title">
+				<ion-icon name="checkmark-circle"></ion-icon> Success
+			</div>
+			<p>This is a <b>success</b> text block.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div>
+		<div class="textblock-default">
+			<div class="textblock-title">
+				<ion-icon name="document-text"></ion-icon> Default
+			</div>
+			<p>This is a <b>default</b> text block.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div>
+		<div class="textblock-special">
+			<div class="textblock-title">
+				<ion-icon name="star"></ion-icon> Special
+			</div>
+			<p>This is a <b>special</b> text block.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div>
+		<div class="textblock-dark">
+			<div class="textblock-title">
+				<ion-icon name="moon"></ion-icon> Dark
+			</div>
+			<p>This is a <b>dark</b> text block.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div>
+		<div class="textblock-dark rainbow-bg">
+			<div class="textblock-title">
+				<ion-icon name="color-wand"></ion-icon> Rainbow
+			</div>
+			<p>This is a <b>rainbow</b> text block.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div> 
+	</div>
+	<div>
+		<h1>Containers</h1>
+		<div class="container">
+			<p>This is a <b>container</b> with some text inside.</p>
+			<a href="https://example.com" class="link">This is a link</a>
+		</div>
+	</div>
+	<h1>Buttons</h1>
+	<div class="container">
+		<button class="button-default">Default Button</button>
+		<button class="button-special">Secondary Button</button>
+		<button class="button-success">Success Button</button>
+		<button class="button-error">Error Button</button>
+		<button class="button-warning">Warning Button</button>
+		<button class="button-information">Info Button</button>
+		<button class="button-dark">Dark Button</button>
+		<button class="button-dark rainbow-bg">Rainbow Button</button>
+
+		<!-- TODO: Implement these buttons in CSS
+		<button class="button button-light">Light Button</button><br>
+		<button class="button button-dark">Dark Button</button><br>
+		<button class="button button-link">Link Button</button><br>
+		<button class="button button-disabled" disabled>Disabled Button</button><br>
+		<button class="button button-outline">Outline Button</button><br>
+		-->
+		<br>
+		<br>
+
+		<a href="#" class="button-default">Default Button Link</a>
+		<a href="#" class="button-special">Secondary Button Link</a>
+		<a href="#" class="button-success">Success Button Link</a>
+		<a href="#" class="button-error">Error Button Link</a>
+		<a href="#" class="button-warning">Warning Button Link</a>
+		<a href="#" class="button-information">Info Button Link</a>
+		<a href="#" class="button-dark">Dark Button Link</a>
+		<a href="#" class="button-dark rainbow-bg">Rainbow Button Link</a>
+	</div>
+	<h1>Inputs</h1>
+	<div class="container">
+		<form action="">
+			<input type="text" placeholder="Default Input">
+			<input type="password" placeholder="Password Input" required>
+			<input type="email" placeholder="Email Input">
+			<textarea placeholder="Default Textarea"></textarea>
+
+			<input type="submit" value="Submit" class="button-default">
+		</form>
+	</div>
+	<div class="container">
+		<form action="">
+			<label><input type="radio" name="test" value="option1"> Test 1</label>
+			<label><input type="radio" name="test" value="option2"> Test 2</label>
+			<label><input type="radio" name="test" value="option3"> Test 3</label>
+			<label><input type="radio" name="test" value="option4"> Test 4</label>
+			<label><input type="radio" name="test" value="option5" disabled checked> Test 5</label>
+			<label><input type="radio" name="test" value="option6"> Test 6</label>
+
+
+			<label><input type="checkbox" name="is"> Reality</label>
+			<label><input type="checkbox" name="not" class="switch" checked> Switch</label>
+			<input type="submit" value="Submit" class="button-default">
+		</form>
+	</div>
+</body>
+</html>

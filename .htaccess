@@ -1,0 +1,1 @@
+ErrorDocument 404 /survey/errors/NotFound.php

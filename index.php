@@ -23,7 +23,7 @@ if (!UserLoggedIn()) {
 		</div>
 		<h2>User Experience Program</h2>
 		<p> Welcome <b><?php echo htmlspecialchars($_SESSION['username']); ?></b>!</p>
-		<?php if (date('n') == 6): ?>
+		<?php if (date('n') == 6 && IsEnabled("pride_month_message")): ?>
 			<div class="textblock-dark">
 			<h2 class="rainbow">Szczęśliwego geja!</h2>
 			</div>
@@ -39,7 +39,7 @@ if (!UserLoggedIn()) {
 				<a class="button-dark" href="./dashboard/index.php">Dashboard</a>
 			</div>
 			<?php endif; ?>
-			<?php if ($flags['ai_survey']['enabled']): ?>
+			<?php if (IsEnabled('ai_survey')): ?>
 				<div class="textblock-default">
 					<div class="textblock-title">
 						<ion-icon name="information-circle"></ion-icon> Information
@@ -55,7 +55,6 @@ if (!UserLoggedIn()) {
 				<p></p>
 				<a href="./styles/styletest.html" class="button-dark rainbow-bg">Test</a>
 			</div>
-
 		<p>Thank you for participating in our User Experience Program!</p>
 	</div>
 </body>

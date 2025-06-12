@@ -21,11 +21,7 @@ if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
 	exit;
 }
 
-// Database connection
-$servername = "localhost"; // Database
-$database = "janekai"; // Database name
-$username = "root"; // Database username
-$password = ""; // Database password
+$model = 'jan-v1';
 
 $conn = GetConection();
 $query = "SELECT m.* FROM Messages m LEFT JOIN MessageFeedback f ON m.ID = f.MessageID AND f.UserID = :user_id WHERE f.ID IS NULL AND m.Rating = 1 ORDER BY m.ID LIMIT 1; ";

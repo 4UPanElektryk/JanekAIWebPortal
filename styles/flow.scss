@@ -65,6 +65,35 @@ $infoset: (
 	$link: map.get($colors, "link");
 
 	body.#{$scheme} {
+		table {
+			border-collapse: collapse;
+			width: 100%;
+			margin: 20px 0;
+			background-color: $background;
+			color: $text;
+
+			th,
+			td {
+				border: 1px solid $border;
+				padding: 10px;
+				text-align: left;
+			}
+
+			th {
+				background-color: $border;
+				color: $text;
+				font-weight: bold;
+			}
+
+			tr:nth-child(even) {
+				background-color: darken($background, 5%);
+			}
+
+			tr:hover {
+				background-color: lighten(desaturate($link, 30%), 10%);
+				;
+			}
+		}
 
 		& {
 			background-color: $background;
@@ -88,7 +117,8 @@ $infoset: (
 		@each $otherscheme, $othercolors in $schemes {
 			@if $otherscheme !=$scheme {
 				#button-mode {
-					display: inline-block;
+					display: inline-flex;
+					align-items: center;
 					background-color: map.get($othercolors, "background");
 					color: map.get($othercolors, "text");
 					border: none;
@@ -122,6 +152,29 @@ $infoset: (
 		// #region Buttons and Textblocks
 		@each $type, $color in $infoset {
 
+			a.button-#{$type},
+			.button-#{$type} {
+				& {
+					display: inline-flex;
+					align-items: center;
+					background-color: change($scheme, $color, 10, "lighten");
+					box-sizing: border-box;
+					text-decoration: none;
+					color: white;
+					border: none;
+					border-radius: 6px;
+					padding: 0.7em 1.5em;
+					font-size: 1em;
+					cursor: pointer;
+					transition: background 0.2s;
+				}
+
+				&:hover {
+					color: white;
+					background-color: change($scheme, $color, 10, "darken");
+				}
+			}
+
 			.textblock-#{$type} {
 				& {
 					background-color: change($scheme, $color, 50, "lighten");
@@ -137,7 +190,7 @@ $infoset: (
 				}
 
 				// Link styles
-				a:not(.button-*) {
+				a:not([class]) {
 					& {
 						color: $color;
 					}
@@ -160,26 +213,7 @@ $infoset: (
 				}
 			}
 
-			a.button-#{$type},
-			.button-#{$type} {
-				& {
-					display: inline-block;
-					background-color: change($scheme, $color, 10, "lighten");
-					text-decoration: none;
-					color: white;
-					border: none;
-					border-radius: 6px;
-					padding: 0.7em 1.5em;
-					font-size: 1em;
-					cursor: pointer;
-					transition: background 0.2s;
-				}
 
-				&:hover {
-					color: white;
-					background-color: change($scheme, $color, 10, "darken");
-				}
-			}
 		}
 
 		// #endregion
@@ -205,6 +239,30 @@ $infoset: (
 		}
 
 		// #region inputs
+		input.changed,
+		input[type="radio"].changed,
+		input[type="checkbox"].changed {
+			& {
+				margin-right: 1em;
+			}
+
+			&::after {
+				display: block;
+				position: relative;
+				top: -0.5em;
+				left: 0.6em;
+				content: "*";
+				font-size: 2.5em;
+				color: change($scheme, $warning, 20, "darken");
+			}
+
+			&.switch {
+				&::after {
+					left: 1.1em;
+				}
+			}
+		}
+
 		input[type="radio"] {
 			& {
 				display: inline-block;
@@ -388,6 +446,7 @@ label {
 			margin: 0.5em 0;
 			padding: 0.7em 0;
 			font-size: 1em;
+			text-align: center;
 		}
 	}
 

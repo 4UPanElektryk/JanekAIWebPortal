@@ -1,19 +1,37 @@
 <?php
+require_once 'ext.php';
+
 $flags = array(
-    'ai_survey' => array(
-        'name' => 'Survey',
-        'description' => 'This flag enables the AI survey feature.',
-        'icon' => 'icon-flag1.png', // Future icon for the flag
-        'color' => '#FF0000', // Future color for the flag
-        'enabled' => true // Example of an additional property
-    ),
-    'flag2' => array(
-        'name' => 'Flag Two',
-        'description' => 'This is the second flag.',
-        'icon' => 'icon-flag2.png',
-        'color' => '#00FF00',
-        'enabled' => false // Example of an additional property
-    ),
-    // Add more flags as needed
 );
+
+function onLoad(){
+    global $flags;
+    $conn = GetConection();
+    $query = "SELECT * FROM `FeatureFlags`;";
+    $result = $conn->query($query);
+    while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+        $flagName = $row['Name'];
+        $flagValue = $row['Enabled'];
+        $flagDescription = $row['Description'] ?? ''; // Use null coalescing operator to handle missing description
+        if (isset($flags[$flagName])) {
+            $flags[$flagName]['enabled'] = $flagValue; // Convert to boolean
+        } else {
+            // If the flag does not exist in the predefined array, you can choose to ignore it or handle it differently
+            $flags[$flagName] = array(
+                'name' => $flagName,
+                'description' => $flagDescription,
+                'enabled' => $flagValue
+            );
+        }
+    }
+}
+onLoad(); // Load flags from the database when the script is included
+
+function IsEnabled($flag) {
+    global $flags;
+    if (isset($flags[$flag]) && isset($flags[$flag]['enabled'])) {
+        return $flags[$flag]['enabled'];
+    }
+    return false; // Default to false if flag is not set or not enabled
+}
 ?>

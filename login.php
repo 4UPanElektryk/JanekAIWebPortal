@@ -3,7 +3,7 @@ require_once './inc/ext.php';
 
 // If already logged in, redirect to index
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin'] === true) {
-    header("Location: index.php");
+    header("Location: ./index.php");
     exit;
 }
 

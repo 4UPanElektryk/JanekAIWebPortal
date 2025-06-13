@@ -2,7 +2,7 @@
 require_once './../inc/ext.php';
 require_once './../inc/flags.php';
 
-if ($flags['ai_survey']['enabled'] !== true) {
+if (!IsEnabled('ai_survey')) {
 	header("Location: index.php");
 	exit;
 }
@@ -16,19 +16,20 @@ if ($flags['ai_survey']['enabled'] !== true) {
  * @package JanekAI
  * @version 1.0
  */
-if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
+if (!UserLoggedIn()) {
 	header("Location: login.php");
 	exit;
 }
 
-$model = 'jan-v1';
+$model = 'jan-v1_1';
 
 $conn = GetConection();
-$query = "SELECT m.* FROM Messages m LEFT JOIN MessageFeedback f ON m.ID = f.MessageID AND f.UserID = :user_id WHERE f.ID IS NULL AND m.Rating = 1 ORDER BY m.ID LIMIT 1; ";
+$query = "SELECT m.* FROM Messages m LEFT JOIN MessageFeedback f ON m.ID = f.MessageID AND f.UserID = :user_id WHERE f.ID IS NULL AND (m.Rating = 1 OR m.Rating = -1) AND m.Model = :model ORDER BY m.ID LIMIT 1; ";
 
 // Prepare and execute the query
 $stmt = $conn->prepare($query);
 // Bind parameters to the prepared statement
+
 $stmt->bindParam(':user_id', $_SESSION['id']);
 $stmt->execute();
 // Fetch the first row of results

@@ -1,12 +1,7 @@
 <?php
 session_start(); // Start the session for user authentication
 function GetConection() {
-    /*require_once 'creds.php'; // Include database credentials
-    if (empty($servername) || empty($database) || empty($username) || empty($password)) {
-        echo "Database credentials are not set.";
-        die();
-    }*/
-    $servername = "localhosy"; // Database server
+    $servername = "localhost"; // Database server
     $database = "JanekAI"; // Database name
     $username = "root"; // Database username
     $password = ""; // Database password

@@ -31,6 +31,7 @@ $stmt = $conn->prepare($query);
 // Bind parameters to the prepared statement
 
 $stmt->bindParam(':user_id', $_SESSION['id']);
+$stmt->bindParam(':model', $model);
 $stmt->execute();
 // Fetch the first row of results
 $row = $stmt->fetch(PDO::FETCH_ASSOC);

@@ -1,9 +1,9 @@
 <?php
-require_once './../inc/ext.php';
-require_once './../inc/flags.php';
+require_once '../inc/ext.php';
+require_once '../inc/flags.php';
 
-if ($flags['ai_survey']['enabled'] !== true) {
-    header("Location: index.php");
+if (!IsEnabled('ai_survey')) {
+    header("Location: ../index.php");
     exit;
 }
 /**
@@ -15,7 +15,7 @@ if ($flags['ai_survey']['enabled'] !== true) {
  * @version 1.0
  */
 if (!isset($_SESSION['loggedin']) || $_SESSION['loggedin'] !== true) {
-    header("Location: login.php");
+    header("Location: ../login.php");
     exit;
 }
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {

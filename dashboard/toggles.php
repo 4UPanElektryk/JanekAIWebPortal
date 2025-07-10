@@ -3,12 +3,12 @@ require_once '../inc/ext.php';
 require_once '../inc/flags.php';
 
 if (!UserLoggedIn()) {
-    header('Location: ./../login.php');
+    header('Location: ../login.php');
     exit;
 }
 
 if (!UserIsAdmin()) {
-    header('Location: ./../index.php');
+    header('Location: ../index.php');
     exit;
 }
 

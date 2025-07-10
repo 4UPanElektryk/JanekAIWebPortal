@@ -1,9 +1,9 @@
 <?php
-require_once './../inc/ext.php';
-require_once './../inc/flags.php';
+require_once '../inc/ext.php';
+require_once '../inc/flags.php';
 
 if (!IsEnabled('ai_survey')) {
-	header("Location: index.php");
+	header("Location: ../index.php");
 	exit;
 }
 
@@ -17,7 +17,7 @@ if (!IsEnabled('ai_survey')) {
  * @version 1.0
  */
 if (!UserLoggedIn()) {
-	header("Location: login.php");
+	header("Location: ../login.php");
 	exit;
 }
 
